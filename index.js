@@ -20,8 +20,16 @@ app.get('/personagem/:id', function (req, res) {
 
   // Acessa o item na lista usando o ID - 1
   const item  = lista[id - 1]
+
+  // Se o usuario buscar um id invalido, retorna o erro 404
+  if (!item) {
+    return res.status(404).send('Item não encontrado')
+  }
+
+  //Enviamos o item como resposta
   res.send(item)
 })
+
 
 // Sinaliza para o Express que estamos usando JSON no body
 app.use(express.json())
@@ -57,6 +65,11 @@ app.put('/personagem/:id', function (req, res) {
   //Acessamos o ID dos parametros de rota
   const id = req.params.id
 
+  // Se o usuario buscar um id invalido, retorna o erro 404
+  if (!lista[id]) {
+    return res.status(404).send('Item não encontrado')
+  }
+
   // Acessamos o Body da requisição
   const body = req.body
 
@@ -84,6 +97,11 @@ app.put('/personagem/:id', function (req, res) {
 app.delete('/personagem/:id', function (req, res) {
  // Acessamos o parâmetro de rota
  const id = req.params.id
+
+ // Se o usuario buscar um id invalido, retorna o erro 404
+ if (!lista[id]) {
+  return res.status(404).send('Item não encontrado')
+}
 
  // Remover o item da lista usando o ID - 1
  delete lista[id - 1]
